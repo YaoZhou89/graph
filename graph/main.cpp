@@ -66,7 +66,8 @@ int main(int argc, char * argv[]) {
             if((para->type) == "gene"){
                 // 调用 gene 这个函数；
                 gene(para);
-                
+/*###
+ */
             }else if ((para->type) == "transcript"){
                 // 调用 transcript这个函数；
                 transcript(para);
