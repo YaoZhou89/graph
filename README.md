@@ -5,3 +5,7 @@
     open the project directly, and add the libz.tbz in the linked Frameworks and libraries
 #### For windows users:
     
+### 2. install
+        make 
+### 3. uninstall
+
