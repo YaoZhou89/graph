@@ -10,7 +10,7 @@
 #define FileFunctions_h
 
 int gene (parameter *para){
-    new gff3(para->inGff);
+    new gff3(para->inGff,para->geneID);
     return 1;
 }
 

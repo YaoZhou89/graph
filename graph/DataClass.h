@@ -13,19 +13,29 @@ using namespace std;
 class parameter {
 //定义了一个类，叫做parameter，用来对命令行的输入进行处理。
 //这个类里没有私有成员，
+private:
+    int testP = 0;
+    
 public:
     string inFile;
     string outFile;
     string inGff;
     string model;
     string type;
+    string geneID;
     // 一个没有参数的构造函数，可以使用它对参数进行初始化
     parameter(){
         inFile = "";
-        inGff = "/Users/yaozhou/Downloads/ITAG3.2_gene_models.gff.txt";
+        inGff = "/Users/yaozhou/Downloads/tomato1.gff3.gz";
         outFile = "";
         model = "gff3";
         type = "gene";
+        geneID = "";
+        cout << "empty" << endl;
+        cout << "testP is:\t" << testP << endl;
+    }
+    parameter(int i){
+        cout << "input number is:\t" << i << endl;
     }
 };
 
@@ -40,12 +50,15 @@ public:
     int transcriptNum;
     map<string, vector<int>> geneLength;
     map<string, int> transprit;
+    map<string,int> exonNumber;
+    set<string> genes;
     // 定义了一个空参数构造函数和一个有参数的构造函数；
-    gff3(string inFile){
+    gff3(string inFile,string geneID){
         cout << "inFile is:\t" << inFile << endl;
         readGff(inFile);
         cout << "gene number is:\t" << geneNum << endl;
         cout << "transcript number is:\t" << transcriptNum << endl;
+        cout << "Gene "<< geneID << "\texon number is:\t" << exonNumber[geneID] << endl;
     }
     
     gff3(){
@@ -66,6 +79,10 @@ public:
         string line;
         vector<string> ll;
         vector<string> name,IDa;
+       
+        bool geneReaded = false;
+        int exonNum = 0;
+        string geneIDpre;
         while (!inf.eof()){
             // 按行读取文件，读入的数据存在line里；
             getline(inf, line);
@@ -82,6 +99,13 @@ public:
             split(name[0],IDa,":");
             string ID = IDa[1]; // while循环里的变量，出了这个循环，就不能用了，注意变量的作用范围
             if (ll[2] == "gene"){
+                if(!geneReaded){
+                    geneReaded = true;
+                }else{
+                    exonNumber.insert(map<string,int>::value_type(geneIDpre,exonNum));
+                }
+                genes.insert(ID);
+                exonNum = 0;
                 ++geneNum;
                 int length = string2Int(ll[4]) - string2Int(ll[3]) + 1;
                 if (geneLength.count(ll[2])>0){
@@ -93,11 +117,14 @@ public:
                     lens.push_back(length);
                     geneLength[ll[2]] = lens;
                 }
+                geneIDpre = ID;
             }else if (ll[2] == "mRNA"){
                 ++transcriptNum;
-                
+                genes.insert(ID);
             }else if (ll[2] == "exon"){
-                continue;
+                genes.insert(ID);
+                exonNum ++;
+                ;
             }else if (ll[2] == "cds"){
                 continue;
             }else if (ll[2] == "intron"){
@@ -111,6 +138,8 @@ public:
             }
             
         }
+//        exonNumber.push_back(exonNum);
+        exonNumber.insert(map<string,int>::value_type(geneIDpre,exonNum));
     }
     
 

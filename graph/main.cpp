@@ -33,6 +33,7 @@ using namespace std;
 // main函数是程序的主入口，程序进入的大门
 int main(int argc, char * argv[]) {
     //标准输出到屏幕，使用 cout; （这是文件注释的第一种方式）
+    help0();
     cout << "Hello, World!\n";
     // 反斜杠\n表示回车键，或者使用endl; 其他常用的是tab隔开, \t；
     cout << "Welcome to C++!  Enjoy your first journey" << endl;
@@ -47,8 +48,8 @@ int main(int argc, char * argv[]) {
     double duration;
     start = clock();
     
-    parameter *para = new parameter; // parameter是我们自己定义的类，para是我们新创建的一个对象；
-    
+//    parameter *para = new parameter(0); // parameter是我们自己定义的类，para是我们新创建的一个对象；
+    parameter *para = new parameter();
     // 对命令行输入的参数进行处理；并检查命令行输入是否合法，不合法就调出。
     // 调用intialization的时候，就已经对参数进行处理了，如果正常则返回值为1，如果异常，则返回值为0；
     if ( (initialization(argc, argv, para) == 0) )
@@ -71,7 +72,7 @@ int main(int argc, char * argv[]) {
                 transcript(para);
                 
             }else{
-                cerr << "please type recgonized! Please check!" << endl;
+                cerr << "type not recgonized! Please check!" << endl;
             }
         }
     }

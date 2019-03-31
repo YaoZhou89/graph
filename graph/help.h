@@ -19,7 +19,7 @@ void  help0()
     "\t\t--out         <str>     output files\n"
     "\t\t--model       <str>     specify model, only gff3 in test \n"
     "\t\t--type        <str>     There are two types in test: gene and transcript, \n"
-    "\t\t-help                   Show help\n"
+    "\t\t--help                   Show help\n"
     "\n";
 }
 

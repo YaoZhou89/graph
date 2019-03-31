@@ -47,6 +47,10 @@ int initialization(int argc, char **argv , parameter * para)
         {
             help0();
             return 0;
+        }else if((flag =="gene")){
+            if(i + 1 == argc) {LogLackArg(flag); return 0;}
+            i++;
+            para -> geneID = argv[i];
         }
         else
         {
